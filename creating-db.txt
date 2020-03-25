@@ -1,0 +1,7 @@
+alter session set "_ORACLE_SCRIPT"=true; 
+
+CREATE TABLESPACE ca_sso_prod DATAFILE 'ca_sso_prod.dbf' SIZE 100m AUTOEXTEND 20m;
+
+CREATE USER cassoprod IDENTIFIED BY Password01 DEFAULT TABLESPACE ca_sso_prod QUOTA UNLIMITED ON ca_sso_prod ;
+    
+GRANT CONNECT, RESOURCE TO cassoprod ;

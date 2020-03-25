@@ -1,0 +1,37 @@
+https://access.redhat.com/documentation/en-us/reference_architectures/2017/html-single/deploying_oracle_database_12c_release_2_on_red_hat_enterprise_linux_7/index
+
+1) hostname should be fqdn in /etc/hosts and /etc/hostnames
+
+<ip addr>	penguin	penguin.kunalshah.local
+
+2) create user 
+
+groupadd --gid 54321 oinstall
+groupadd --gid 54322 dba
+useradd --uid 54321 --gid oinstall --groups dba oracle
+passwd oracle
+
+3) create directory
+su - 
+mkdir /opt/oracle
+chown -R oracle:oinstall /opt/oracle
+exit
+chmod -R 775 /opt/oracle
+chmod g+s /opt/oracle
+
+4) place 98-oracle-kernel in /etc/sysctl.d/
+5) place 99-grid-oracle-limits.conf in /etc/security/limits.d/
+
+6) install required packages
+
+yum install $(cat file_name)
+
+7) environt variables
+
+ORACLE_BASE=/opt/oracle/app/oracle; export ORACLE_BASE
+ORACLE_HOME=$ORACLE_BASE/product/12.2.0/dbhome_1; export ORACLE_HOME
+ORACLE_SID=orcl; export ORACLE_SID
+ORACLE_PDB=orclpdb; export ORACLE_PDB
+PATH=$ORACLE_HOME/bin:$PATH; export PATH
+LD_LIBRARY_PATH=$ORACLE_HOME/lib:/lib:/usr/lib:/usr/lib64; export LD_LIBRARY_PATH
+CLASSPATH=$ORACLE_HOME/jlib:$ORACLE_HOME/rdbms/jlib; export CLASSPATH
